@@ -76,12 +76,12 @@ def PnP_MoLi(meas, Phi, z, truth_tensor, args):
         pred_meas = A(shift(model_out.squeeze(0).permute(1, 2, 0), 2).to(device), Phi.to(device))
 
         if z == None:
-            loss = 1*loss_l1(meas, pred_meas) #+ (1/2)*loss_l2(meas, pred_meas)
+            loss = args.lambda_R*loss_l1(meas, pred_meas) #+ (1/2)*loss_l2(meas, pred_meas)
         else:
-            loss = args.lambda_R*loss_l1(meas, pred_meas) + (args.lambda_/2)*loss_l2(z, model_out)
+            loss = args.lambda_R*loss_l1(meas, pred_meas) #+ (args.lambda_/2)*loss_l2(z, model_out)
 
         loss_tv = loss_l1(im_input, torch.zeros_like(im_input))
-        loss += 0.1*loss_tv
+        loss += args.lambda_*loss_tv
         
         optimizer.zero_grad() 
         loss.backward()

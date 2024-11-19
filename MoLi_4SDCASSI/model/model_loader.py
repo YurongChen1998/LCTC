@@ -9,9 +9,9 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 def CTC_model_load(ip_BI, band):
     im_net = Deep_Image_Prior_Network(ip_BI, 'reflection',
                             upsample_mode=['nearest', 'nearest', 'bilinear'],
-                            skip_n33d=32,
-                            skip_n33u=32,
-                            skip_n11=12,
+                            skip_n33d=36,
+                            skip_n33u=36,
+                            skip_n11=16,
                             num_scales=3,
                             n_channels=band)                                             
     return [im_net.to(device)]
