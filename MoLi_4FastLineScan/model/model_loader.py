@@ -6,13 +6,13 @@ from model.CTCNet import Deep_Image_Prior_Network
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
-def CTC_model_load(rank):
-    im_net = Deep_Image_Prior_Network(rank, 'reflection',
+def CTC_model_load(ip_BI, band):
+    im_net = Deep_Image_Prior_Network(ip_BI, 'reflection',
                             upsample_mode=['nearest', 'nearest', 'bilinear'],
                             skip_n33d=32,
                             skip_n33u=32,
                             skip_n11=12,
                             num_scales=3,
-                            n_channels=119)                                             
+                            n_channels=band)                                             
     return [im_net.to(device)]
 

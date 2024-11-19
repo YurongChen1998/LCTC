@@ -20,7 +20,7 @@ import warnings
 warnings.filterwarnings('ignore')
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB=False):
+def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB = False):
     # -------------------- Initialization -------------------- #
     l = noisy_data.to(device)
     u1 = torch.zeros_like(l).to(device)
@@ -47,7 +47,7 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB=
         # -------- Updata l
         temp_l = x - u1
         temp_l = temp_l.permute(2, 0, 1).unsqueeze(0)
-        im_net = CTC_model_load(ip_BI)
+        im_net = CTC_model_load(ip_BI, temp_l.shape[1])
         train_iter, lambda_R = int(train_iter*1.01), lambda_R*0.96
         out, loss_y_iter = PnP_MoLi(truth_tensor, temp_l, im_net, train_iter, R_iter, lambda_R, ip_BI)
         l = out.squeeze(0).permute(1, 2, 0).to(device)
@@ -115,7 +115,7 @@ def PnP_MoLi(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, ip_BI):
         if (idx+1)%100==0:
             PSNR0 = calculate_psnr(truth_tensor, model_out0.squeeze(0))
             print('Lowrank--Iter {}, x_loss:{:.4f}, 1_loss:{:.4f}, PSNR:{:.2f}'.format(idx+1, loss_.detach().cpu().numpy(), loss_1.detach().cpu().numpy(), PSNR0))
-            if True:
+            if False:
                 with torch.no_grad():
                     show_rgbimg(model_out0.squeeze(0))
                     
