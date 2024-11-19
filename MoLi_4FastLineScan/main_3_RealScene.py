@@ -22,21 +22,20 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 np.random.seed(1234)
 
 #-----------------------Opti. Configuration -----------------------#
-parser = argparse.ArgumentParser()
+
 parser.add_argument('--iter_num', default = 50,             help="Maximum number of iterations")
-parser.add_argument('--lambda_',  default = 0.03,           help="Facotr of the deep Low-rank regularization")
-parser.add_argument('--LR_iter',  default = 3000,           help="Training epochs of deep Low-rank networks")
-parser.add_argument('--R_iter',   default = 1500,           help="Reduced Training epochs of deep Low-rank networks")
-parser.add_argument('--lambda_R', default = 0.2,            help="Factor of TV/SSTV regularization in DLD")
-parser.add_argument('--rank',     default = 10,             help="Rank of hyperspectral images")
-parser.add_argument('--case',     default = 'RealScene1',   help="Case0_15/35/55 or Case1-6")
+parser.add_argument('--lambda_',  default = 0.03,           help="Facotr of the MoLi regularization")
+parser.add_argument('--LR_iter',  default = 3000,           help="Training epochs of CTC networks")
+parser.add_argument('--R_iter',   default = 1500,           help="Reduced Training epochs of CTC networks")
+parser.add_argument('--lambda_R', default = 0.2,            help="Factor of TV/SSTV regularization in CTC")
+parser.add_argument('--ip_BI',    default = 10,             help="The number of channel of input")
+parser.add_argument('--case',     default = 'RealScene1',   help="RealScene1")
 args = parser.parse_args()
 
 
 #----------------------- Data Configuration -----------------------#
 dataset_dir = '../Data/RealScene_data/'
 data_name = args.case
-
 results_dir = './Results/' + data_name + '/'
 if not os.path.exists(results_dir):
     os.makedirs(results_dir)
@@ -51,10 +50,6 @@ noisy_data = (noisy_data ) / (torch.max(noisy_data))
 print('Min of truth:', torch.min(data_truth), 'Min of noisy data:', torch.min(noisy_data))
 print('Max of truth:', torch.max(data_truth), 'Max of noisy data:', torch.max(noisy_data))
 
-#noisy_data[noisy_data > 1] = 1
-#noisy_data[noisy_data < 0] = 0
-#print('Noise Image PSNR:', calculate_psnr(data_truth, noisy_data), 'Noise Image SSIM:', calculate_ssim(data_truth, noisy_data))
-
 
 #-------------------------- Optimization --------------------------#
-x_rec = ADMM_Iter(noisy_data.to(device), data_truth.to(device), args, index = int(data_name[-1:]), save_path = results_dir)
+x_rec = ADMM_Iter(noisy_data.to(device), data_truth.to(device), args, index = int(data_name[-1:]), save_path = results_dir, show_RGB=True)

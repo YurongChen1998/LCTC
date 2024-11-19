@@ -2,6 +2,7 @@ import pdb
 import torch
 import torch.nn as nn
 import numpy as np
+import model.basicblock as B    
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 class Downsampler(nn.Module):
@@ -122,9 +123,8 @@ def bn(num_features):
     #return nn.BatchNorm2d(num_features)
     return nn.Sequential()
 
-import model.basicblock as B    
-def ca_conv(in_f, ou_f, reduction=16):   
-    return B.CARlock(in_channels=in_f, out_channels=ou_f, reduction=reduction).to(device)
+def ctc_conv(in_f, ou_f, reduction=16):   
+    return B.CTCBlock(in_channels=in_f, out_channels=ou_f, reduction=reduction).to(device)
 
 def conv(in_f, out_f, kernel_size, stride=1, bias=False, pad='zero', downsample_mode='stride'):
     downsampler = None

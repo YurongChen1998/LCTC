@@ -2,11 +2,11 @@ import torch
 import torch.nn as nn
 import os
 from collections import OrderedDict
-from model.LRNet import Deep_Image_Prior_Network
+from model.CTCNet import Deep_Image_Prior_Network
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
-def low_rank_model_load(rank):
+def CTC_model_load(rank):
     im_net = Deep_Image_Prior_Network(rank, 'reflection',
                             upsample_mode=['nearest', 'nearest', 'bilinear'],
                             skip_n33d=32,

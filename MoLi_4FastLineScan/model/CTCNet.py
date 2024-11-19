@@ -49,7 +49,7 @@ def skip(num_input_channels=2, num_output_channels=3,
             skip.add(bn(num_channels_skip[i]))
             skip.add(act(act_fun))
 
-            skip.add(ca_conv(num_channels_skip[i], num_channels_skip[i]))
+            skip.add(ctc_conv(num_channels_skip[i], num_channels_skip[i]))
             skip.add(bn(num_channels_skip[i]))
             skip.add(act(act_fun))
 
@@ -57,7 +57,7 @@ def skip(num_input_channels=2, num_output_channels=3,
         deeper.add(bn(num_channels_down[i]))
         deeper.add(act(act_fun))
 
-        deeper.add(ca_conv(num_channels_down[i], num_channels_down[i]))
+        deeper.add(ctc_conv(num_channels_down[i], num_channels_down[i]))
         deeper.add(bn(num_channels_down[i]))
         deeper.add(act(act_fun))
 
@@ -65,7 +65,7 @@ def skip(num_input_channels=2, num_output_channels=3,
         deeper.add(bn(num_channels_down[i]))
         deeper.add(act(act_fun))
 
-        deeper.add(ca_conv(num_channels_down[i], num_channels_down[i]))
+        deeper.add(ctc_conv(num_channels_down[i], num_channels_down[i]))
         deeper.add(bn(num_channels_down[i]))
         deeper.add(act(act_fun))
         deeper_main = nn.Sequential()
@@ -82,7 +82,7 @@ def skip(num_input_channels=2, num_output_channels=3,
         model_tmp.add(bn(num_channels_up[i]))
         model_tmp.add(act(act_fun))
 
-        model_tmp.add(ca_conv(num_channels_up[i], num_channels_up[i]))
+        model_tmp.add(ctc_conv(num_channels_up[i], num_channels_up[i]))
         model_tmp.add(bn(num_channels_up[i]))
         model_tmp.add(act(act_fun))
         
@@ -90,7 +90,7 @@ def skip(num_input_channels=2, num_output_channels=3,
         model_tmp.add(bn(num_channels_up[i]))
         model_tmp.add(act(act_fun))
         
-        model_tmp.add(ca_conv(num_channels_up[i], num_channels_up[i]))
+        model_tmp.add(ctc_conv(num_channels_up[i], num_channels_up[i]))
         model_tmp.add(bn(num_channels_up[i]))
         model_tmp.add(act(act_fun))
         
@@ -100,10 +100,10 @@ def skip(num_input_channels=2, num_output_channels=3,
             model_tmp.add(bn(num_channels_up[i]))
             model_tmp.add(act(act_fun))
 
-            model_tmp.add(ca_conv(num_channels_up[i], num_channels_up[i]))
+            model_tmp.add(ctc_conv(num_channels_up[i], num_channels_up[i]))
             model_tmp.add(bn(num_channels_up[i]))
             model_tmp.add(act(act_fun))
-            model_tmp.add(ca_conv(num_channels_up[i], num_channels_up[i]))
+            model_tmp.add(ctc_conv(num_channels_up[i], num_channels_up[i]))
             model_tmp.add(bn(num_channels_up[i]))
             model_tmp.add(act(act_fun))
 

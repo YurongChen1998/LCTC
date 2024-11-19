@@ -15,12 +15,12 @@ from func import *
 import scipy.io as sio
 from thop import profile
 from model.utils import MSIQA
-from model.model_loader import low_rank_model_load
+from model.model_loader import CTC_model_load
 import warnings
 warnings.filterwarnings('ignore')
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None):
+def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB=False):
     # -------------------- Initialization -------------------- #
     l = noisy_data.to(device)
     u1 = torch.zeros_like(l).to(device)
@@ -28,13 +28,14 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None):
     ssim_all = []
     psnr_all = []
     loss_y_min = 3
-    lambda_, lambda_R, rank = args.lambda_, args.lambda_R, args.rank
+    lambda_, lambda_R, ip_BI = args.lambda_, args.lambda_R, args.ip_BI
     iter_num, train_iter, R_iter = args.iter_num, args.LR_iter, args.R_iter
     
     truth_tensor = X_ori.permute(2, 0, 1).to(device)
-    show_rgbimg(truth_tensor, savepath="./Results/True_RGB.png")
     noisy_data_tensor = noisy_data.permute(2, 0, 1).unsqueeze(0).to(device)
-    show_rgbimg(noisy_data_tensor.squeeze(0), savepath="./Results/Noisy_RGB.png")
+    if show_RGB:
+        show_rgbimg(truth_tensor, savepath="./Results/True_RGB.png")
+        show_rgbimg(noisy_data_tensor.squeeze(0), savepath="./Results/Noisy_RGB.png")
 
     # ----------------------- Iteration ---------------------- #
     for it in range(iter_num):
@@ -46,9 +47,9 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None):
         # -------- Updata l
         temp_l = x - u1
         temp_l = temp_l.permute(2, 0, 1).unsqueeze(0)
-        im_net = low_rank_model_load(rank)
+        im_net = CTC_model_load(ip_BI)
         train_iter, lambda_R = int(train_iter*1.01), lambda_R*0.96
-        out, loss_y_iter = Low_Rank_Decomposition_PnP(truth_tensor, temp_l, im_net, train_iter, R_iter, lambda_R, rank)
+        out, loss_y_iter = PnP_MoLi(truth_tensor, temp_l, im_net, train_iter, R_iter, lambda_R, ip_BI)
         l = out.squeeze(0).permute(1, 2, 0).to(device)
         
         # -------- Updata Dual Variable u1
@@ -65,7 +66,7 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None):
     return x_rec
     
   
-def Low_Rank_Decomposition_PnP(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, rank):   
+def PnP_MoLi(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, ip_BI):   
     reg_noise_std = 1.0/30.0
     loss_array = np.zeros(iter_num)
     best_loss = float('inf')
@@ -73,7 +74,7 @@ def Low_Rank_Decomposition_PnP(truth_tensor, temp_l, im_net, iter_num, R_iter, l
     loss_l2 = torch.nn.MSELoss().to(device)
     Band, H, W = truth_tensor.shape
 
-    im_input = get_input([1, rank, H, W]).to(device)
+    im_input = get_input([1, ip_BI, H, W]).to(device)
         
     if os.path.exists('Results/model_weights.pth'):
         im_net[0].load_state_dict(torch.load('Results/model_weights.pth')['im_net'])
@@ -83,7 +84,6 @@ def Low_Rank_Decomposition_PnP(truth_tensor, temp_l, im_net, iter_num, R_iter, l
 
     im_net[0].train()
     net_params = list(im_net[0].parameters())
-
     input_params = [im_input]
     im_input_temp = im_input.detach().clone()
 

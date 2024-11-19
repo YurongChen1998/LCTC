@@ -82,9 +82,9 @@ class SE_Block(nn.Module):
         return x * y.expand_as(x)
         
 
-class CARlock(nn.Module):
+class CTCBlock(nn.Module):
     def __init__(self, in_channels=64, out_channels=64, kernel_size=3, stride=1, padding=1, bias=False, mode='CBLD', reduction=16, negative_slope=0.2):
-        super(CARlock, self).__init__()
+        super(CTCBlock, self).__init__()
         assert in_channels == out_channels, 'Only support in_channels==out_channels.'
         if mode[0] in ['R','L']:
             mode = mode[0].lower() + mode[1:]
