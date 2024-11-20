@@ -19,7 +19,7 @@ import warnings
 
 warnings.filterwarnings('ignore')
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-np.random.seed(1245)
+np.random.seed(5)
 
 #-----------------------Opti. Configuration -----------------------#
 parser = argparse.ArgumentParser()
@@ -27,9 +27,9 @@ parser.add_argument('--iter_num', default = 30,             help="Maximum number
 parser.add_argument('--lambda_',  default = 0.05,           help="Facotr of the MoLi regularization")
 parser.add_argument('--LR_iter',  default = 700,            help="Training epochs of CTC networks")
 parser.add_argument('--R_iter',   default = 300,            help="Reduced Training epochs of CTC networks")
-parser.add_argument('--lambda_R', default = 0.03,           help="Factor of TV/SSTV regularization in CTC")
+parser.add_argument('--lambda_R', default = 0.3,            help="Factor of TV/SSTV regularization in CTC")
 parser.add_argument('--ip_BI',    default = 5,              help="The number of channel of input")
-parser.add_argument('--case',     default = 'Case2',        help="Case1-6")
+parser.add_argument('--case',     default = 'Case3',        help="Case1-6")
 args = parser.parse_args()
 
 

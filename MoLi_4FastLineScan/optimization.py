@@ -98,7 +98,7 @@ def PnP_MoLi(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, ip_BI):
         model_out0 = im_net[0](im_input_perturbed)
                 
         loss_1 = ss_tv_loss(model_out0) + 3*loss_fn(im_input, torch.zeros_like(im_input))
-        loss_ = 3*loss_fn(temp_l, model_out0)
+        loss_ = 5*loss_fn(temp_l, model_out0)
         loss = loss_ + lambda_R*(loss_1)
         loss_array[idx] = loss.item()
         
