@@ -115,7 +115,7 @@ def PnP_MoLi(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, ip_BI):
         if (idx+1)%100==0:
             PSNR0 = calculate_psnr(truth_tensor, model_out0.squeeze(0))
             print('Lowrank--Iter {}, x_loss:{:.4f}, 1_loss:{:.4f}, PSNR:{:.2f}'.format(idx+1, loss_.detach().cpu().numpy(), loss_1.detach().cpu().numpy(), PSNR0))
-            if False:
+            if True:
                 with torch.no_grad():
                     show_rgbimg(model_out0.squeeze(0))
                     

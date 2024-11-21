@@ -22,7 +22,7 @@ device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 np.random.seed(1234)
 
 #-----------------------Opti. Configuration -----------------------#
-
+parser = argparse.ArgumentParser()
 parser.add_argument('--iter_num', default = 50,             help="Maximum number of iterations")
 parser.add_argument('--lambda_',  default = 0.03,           help="Facotr of the MoLi regularization")
 parser.add_argument('--LR_iter',  default = 3000,           help="Training epochs of CTC networks")
@@ -53,3 +53,5 @@ print('Max of truth:', torch.max(data_truth), 'Max of noisy data:', torch.max(no
 
 #-------------------------- Optimization --------------------------#
 x_rec = ADMM_Iter(noisy_data.to(device), data_truth.to(device), args, index = int(data_name[-1:]), save_path = results_dir, show_RGB=True)
+if os.path.exists('./Results/model_weights.pth'):
+    os.remove('./Results/model_weights.pth')

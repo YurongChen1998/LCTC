@@ -23,13 +23,13 @@ np.random.seed(1234)
 
 #-----------------------Opti. Configuration -----------------------#
 parser = argparse.ArgumentParser()
-parser.add_argument('--iter_num', default = 50,             help="Maximum number of iterations")
+parser.add_argument('--iter_num', default = 40,             help="Maximum number of iterations")
 parser.add_argument('--lambda_',  default = 0.03,           help="Facotr of the MoLi regularization")
 parser.add_argument('--LR_iter',  default = 1200,           help="Training epochs of CTC networks")
 parser.add_argument('--R_iter',   default = 1000,           help="Reduced Training epochs of CTC networks")
 parser.add_argument('--lambda_R', default = 0.03,           help="Factor of TV/SSTV regularization in CTC")
 parser.add_argument('--ip_BI',    default = 8,              help="The number of channel of input")
-parser.add_argument('--case',     default = 'Case1',        help="Case1-6")
+parser.add_argument('--case',     default = 'Case6',        help="Case1-6")
 args = parser.parse_args()
 
 
@@ -50,3 +50,5 @@ print('Noise Image PSNR:', calculate_psnr(data_truth, noisy_data), 'Noise Image 
 
 #-------------------------- Optimization --------------------------#
 x_rec = ADMM_Iter(noisy_data.to(device), data_truth.to(device), args, index = int(data_name[-1:]), save_path = results_dir)
+if os.path.exists('./Results/model_weights.pth'):
+    os.remove('./Results/model_weights.pth')
