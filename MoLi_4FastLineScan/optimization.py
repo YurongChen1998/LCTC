@@ -75,7 +75,6 @@ def PnP_MoLi(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, ip_BI):
     Band, H, W = truth_tensor.shape
 
     im_input = get_input([1, ip_BI, H, W]).to(device)
-        
     if os.path.exists('Results/model_weights.pth'):
         im_net[0].load_state_dict(torch.load('Results/model_weights.pth')['im_net'])
         iter_num = R_iter
