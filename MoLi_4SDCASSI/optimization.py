@@ -52,9 +52,9 @@ def PnP_MoLi(meas, Phi, z, truth_tensor, args):
     im_net = CTC_model_load(args.ip_BI, B)
     im_input = get_input([1, args.ip_BI, H, W]).to(device)
     
-    save_model_weight = False
-    if os.path.exists('result/model_weights.pth'):
-        im_net[0].load_state_dict(torch.load('result/model_weights.pth'))
+    save_model_weight = False if args.iter_num == 1 else True
+    if os.path.exists('Results/model_weights.pth'):
+        im_net[0].load_state_dict(torch.load('Results/model_weights.pth'))
         print('----------------------- Load model weights -----------------------')
         iter_num, save_model_weight = args.R_iter, True
         
@@ -91,7 +91,7 @@ def PnP_MoLi(meas, Phi, z, truth_tensor, args):
             best_loss = loss.item()
             best_hs_recon = model_out.detach()
             if save_model_weight == True:
-                torch.save(im_net[0].state_dict(), 'result/model_weights.pth')
+                torch.save(im_net[0].state_dict(), 'Results/model_weights.pth')
         
         if (idx+1)%200==0:
             PSNR = calculate_psnr_tensor(truth_tensor, model_out.squeeze(0))
