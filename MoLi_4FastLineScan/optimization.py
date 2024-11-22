@@ -60,7 +60,7 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB 
         psnr_x, ssim_x, _ = MSIQA(X_ori.permute(2, 0, 1).cpu().numpy(), x_rec.permute(2, 0, 1).cpu().numpy())
         print('Iter {} | loss = {:.3f} | PSNR = {:.2f}dB | SSIM = {:.2f}'.format( it+1, loss_y_iter, psnr_x, ssim_x))
         
-        if loss_y_min < psnr_x and it > 10:
+        if loss_y_min < psnr_x:
             loss_y_min = psnr_x
             sio.savemat(save_path + 'scene0{}_{}_{:.2f}_{:.3f}.mat'.format(index, it+1, psnr_x, ssim_x),{'x_rec': x_rec.detach().cpu().numpy()})
     return x_rec
