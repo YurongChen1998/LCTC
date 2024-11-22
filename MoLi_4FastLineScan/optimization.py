@@ -60,7 +60,7 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB 
         psnr_x, ssim_x, _ = MSIQA(X_ori.permute(2, 0, 1).cpu().numpy(), x_rec.permute(2, 0, 1).cpu().numpy())
         print('Iter {} | loss = {:.3f} | PSNR = {:.2f}dB | SSIM = {:.2f}'.format( it+1, loss_y_iter, psnr_x, ssim_x))
         
-        if loss_y_min < psnr_x and it > 10:
+        if loss_y_min < psnr_x:
             loss_y_min = psnr_x
             sio.savemat(save_path + 'scene0{}_{}_{:.2f}_{:.3f}.mat'.format(index, it+1, psnr_x, ssim_x),{'x_rec': x_rec.detach().cpu().numpy()})
     return x_rec
@@ -114,7 +114,7 @@ def PnP_MoLi(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, ip_BI):
         if (idx+1)%100==0:
             PSNR0 = calculate_psnr(truth_tensor, model_out0.squeeze(0))
             print('Lowrank--Iter {}, x_loss:{:.4f}, 1_loss:{:.4f}, PSNR:{:.2f}'.format(idx+1, loss_.detach().cpu().numpy(), loss_1.detach().cpu().numpy(), PSNR0))
-            if True:
+            if False:
                 with torch.no_grad():
                     show_rgbimg(model_out0.squeeze(0))
                     
