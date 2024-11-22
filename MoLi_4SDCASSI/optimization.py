@@ -22,6 +22,7 @@ def ADMM_Iter(meas, Phi, truth_tensor, args):
     z, u = x0.to(device), torch.zeros_like(x0).to(device)
     Phi_sum = torch.sum(Phi, 2)
     Phi_sum[Phi_sum==0] = 1
+    im_input = get_input([1, args.ip_BI, x0.shape[0], x0.shape[1]]).to(device)
     best_PSNR, iter_num, lambda_ = 0, args.iter_num, args.lambda_
 
     # ---------------- Iteration ----------------#
@@ -34,23 +35,21 @@ def ADMM_Iter(meas, Phi, truth_tensor, args):
         print('Iter {} | PSNR = {:.2f}dB'.format( iter, psnr_x))
 
         z = x+u
-        z = PnP_MoLi(meas, Phi, z.permute(2, 0, 1).unsqueeze(0), truth_tensor, args)
+        z = PnP_MoLi(meas, Phi, z.permute(2, 0, 1).unsqueeze(0), truth_tensor, im_input, args)
         u = u + (x.to(device) - z.to(device))
     return z
 
 
 
 
-def PnP_MoLi(meas, Phi, z, truth_tensor, args):
+def PnP_MoLi(meas, Phi, z, truth_tensor, im_input, args):
     torch.backends.cudnn.benchmark = True
     iter_num = args.LR_iter
-    _, B, H, W = truth_tensor.shape
+    _, B, _, _ = truth_tensor.shape
     best_loss = float('inf')
     loss_l1 = torch.nn.L1Loss().to(device)
     loss_l2 = torch.nn.MSELoss().to(device)
-
     im_net = CTC_model_load(args.ip_BI, B)
-    im_input = get_input([1, args.ip_BI, H, W]).to(device)
     
     save_model_weight = False if args.iter_num == 1 else True
     if os.path.exists('Results/model_weights.pth'):
