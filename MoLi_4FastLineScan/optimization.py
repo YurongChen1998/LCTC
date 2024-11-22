@@ -29,6 +29,7 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB 
     psnr_all = []
     loss_y_min = 3
     lambda_, lambda_R, ip_BI = args.lambda_, args.lambda_R, args.ip_BI
+    im_input = get_input([1, ip_BI, noisy_data.shape[0], noisy_data.shape[1]]).to(device)
     iter_num, train_iter, R_iter = args.iter_num, args.LR_iter, args.R_iter
     
     truth_tensor = X_ori.permute(2, 0, 1).to(device)
@@ -49,7 +50,7 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB 
         temp_l = temp_l.permute(2, 0, 1).unsqueeze(0)
         im_net = CTC_model_load(ip_BI, temp_l.shape[1])
         train_iter, lambda_R = int(train_iter*1.01), lambda_R*0.96
-        out, loss_y_iter = PnP_MoLi(truth_tensor, temp_l, im_net, train_iter, R_iter, lambda_R, ip_BI)
+        out, loss_y_iter = PnP_MoLi(truth_tensor, temp_l, im_net, train_iter, R_iter, lambda_R, im_input)
         l = out.squeeze(0).permute(1, 2, 0).to(device)
         
         # -------- Updata Dual Variable u1
@@ -66,7 +67,7 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB 
     return x_rec
     
   
-def PnP_MoLi(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, ip_BI):   
+def PnP_MoLi(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, im_input):   
     reg_noise_std = 1.0/30.0
     loss_array = np.zeros(iter_num)
     best_loss = float('inf')
@@ -74,7 +75,6 @@ def PnP_MoLi(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, ip_BI):
     loss_l2 = torch.nn.MSELoss().to(device)
     Band, H, W = truth_tensor.shape
 
-    im_input = get_input([1, ip_BI, H, W]).to(device)
     if os.path.exists('Results/model_weights.pth'):
         im_net[0].load_state_dict(torch.load('Results/model_weights.pth')['im_net'])
         iter_num = R_iter

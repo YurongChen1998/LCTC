@@ -26,11 +26,11 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--iter_num', default = 7,              help="Maximum number of iterations")
 parser.add_argument('--lambda_',  default = 0.3,            help="Facotr of the MoLi regularization")
 parser.add_argument('--LR_iter',  default = 6000,           help="Training epochs of CTC networks")
-parser.add_argument('--R_iter',   default = 6000,           help="Reduced Training epochs of CTC networks")
+parser.add_argument('--R_iter',   default = 850,            help="Reduced Training epochs of CTC networks")
 parser.add_argument('--lambda_R', default = 1,              help="Factor of TV/SSTV regularization in CTC")
 parser.add_argument('--ip_BI',    default = 3,              help="The number of channel of input")
 parser.add_argument('--step',     default = 2,              help="step for spectral shifting")
-parser.add_argument('--scene',    default = 'scene10',      help="scene01-10")
+parser.add_argument('--scene',    default = 'scene05',      help="scene01-10")
 args = parser.parse_args()
 
 
