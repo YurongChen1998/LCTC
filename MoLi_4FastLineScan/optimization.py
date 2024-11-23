@@ -25,8 +25,6 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB 
     l = noisy_data.to(device)
     u1 = torch.zeros_like(l).to(device)
     s = torch.zeros_like(l).to(device)
-    ssim_all = []
-    psnr_all = []
     loss_y_min = 3
     lambda_, lambda_R, ip_BI = args.lambda_, args.lambda_R, args.ip_BI
     iter_num, train_iter, R_iter = args.iter_num, args.LR_iter, args.R_iter
