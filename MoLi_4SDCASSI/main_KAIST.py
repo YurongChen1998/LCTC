@@ -23,14 +23,14 @@ random.seed(5)
 
 #-----------------------Opti. Configuration -----------------------#
 parser = argparse.ArgumentParser()
-parser.add_argument('--iter_num', default = 7,              help="Maximum number of iterations")
+parser.add_argument('--iter_num', default = 1,              help="Maximum number of iterations")
 parser.add_argument('--lambda_',  default = 0.3,            help="Facotr of the MoLi regularization")
 parser.add_argument('--LR_iter',  default = 6000,           help="Training epochs of CTC networks")
 parser.add_argument('--R_iter',   default = 850,            help="Reduced Training epochs of CTC networks")
 parser.add_argument('--lambda_R', default = 1,              help="Factor of TV/SSTV regularization in CTC")
 parser.add_argument('--ip_BI',    default = 3,              help="The number of channel of input")
 parser.add_argument('--step',     default = 2,              help="step for spectral shifting")
-parser.add_argument('--scene',    default = 'scene05',      help="scene01-10")
+parser.add_argument('--scene',    default = 'scene03',      help="scene01-10")
 args = parser.parse_args()
 
 
@@ -38,7 +38,7 @@ args = parser.parse_args()
 dataset_dir = '../Data/KAIST_Dataset/Orig_data/'
 data_name = args.scene
 if data_name == 'scene03' or data_name == 'scene07' or data_name == 'scene09':
-    args.lambda_R = 0.07
+    args.lambda_, args.lambda_R = 0.5, 0.07
     print('---------------- Adjust lambda_R ----------------', data_name)
 
 results_dir = './Results/' + data_name + '/'
