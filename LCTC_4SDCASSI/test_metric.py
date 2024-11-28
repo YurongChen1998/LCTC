@@ -12,7 +12,6 @@ import numpy as np
 from func import *
 from numpy import *
 import scipy.io as sio
-from torchmetrics import SpectralAngleMapper, ErrorRelativeGlobalDimensionlessSynthesis
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 def main(data_name):
@@ -25,12 +24,10 @@ def main(data_name):
     data_truth = torch.from_numpy(sio.loadmat(matfile)['img'])
     recon = torch.from_numpy(sio.loadmat('./Results/' + data_name + './' + data_name + '.mat')['img'])
 
-    sam = SpectralAngleMapper()
     vrecon = recon.double().cpu()
     ssim_ = calculate_ssim(data_truth, vrecon)
     psnr_ = calculate_psnr(data_truth, vrecon)
-    sam_ = sam(torch.unsqueeze(vrecon.permute(2, 0, 1), 0).double(), torch.unsqueeze(data_truth.permute(2, 0, 1), 0).double())
-    print('PSNR {:2.3f}, ---------, SSIM {:2.3f}, ---------, SAM {:2.3f}'.format(psnr_, ssim_, sam_))
+    print('PSNR {:2.3f}, ---------, SSIM {:2.3f}'.format(psnr_, ssim_))
 
 
     #x = vrecon.clamp_(0, 1).numpy()
