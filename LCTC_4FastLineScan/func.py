@@ -175,7 +175,7 @@ def show_rgbimg(data, savepath="./Results/current_RGB.png"):
     # data shape: [c, h, w]
     img = data.detach().cpu().numpy()
     rgb_reco = np.zeros((img.shape[1], img.shape[2], 3), dtype=np.float32)
-    rgb_reco[...,0], rgb_reco[...,1], rgb_reco[...,2] = img[-1, :, :], img[48, :, :], img[0,:, :]
+    rgb_reco[...,0], rgb_reco[...,1], rgb_reco[...,2] = img[-1, :, :], img[20, :, :], img[0,:, :]
     img_hist, bins = np.histogram(rgb_reco.flatten(), 256, density=True)
     cdf = img_hist.cumsum()
     cdf = 1. * cdf / cdf[-1]

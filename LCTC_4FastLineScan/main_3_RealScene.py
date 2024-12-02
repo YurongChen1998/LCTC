@@ -29,7 +29,7 @@ parser.add_argument('--LR_iter',  default = 3000,           help="Training epoch
 parser.add_argument('--R_iter',   default = 3000,           help="Reduced Training epochs of CTC networks")
 parser.add_argument('--lambda_R', default = 0.2,            help="Factor of TV/SSTV regularization in CTC")
 parser.add_argument('--ip_BI',    default = 10,             help="The number of channel of input")
-parser.add_argument('--case',     default = 'RealScene1',   help="RealScene1")
+parser.add_argument('--case',     default = 'RealScene2',   help="RealScene1")
 args = parser.parse_args()
 
 
@@ -42,7 +42,7 @@ if not os.path.exists(results_dir):
 matfile = dataset_dir + '/' + data_name + '.mat'
 
 data_truth = torch.from_numpy(sio.loadmat(matfile)['img'])
-noisy_data = torch.from_numpy(sio.loadmat(matfile)['noisy_img_5'])
+noisy_data = torch.from_numpy(sio.loadmat(matfile)['noisy_img'])
 print('Mean of truth:', torch.mean(data_truth), 'Mean of noisy data:', torch.mean(noisy_data))
 
 data_truth = (data_truth) / (torch.max(data_truth))
