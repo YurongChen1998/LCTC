@@ -27,8 +27,8 @@ parser.add_argument('--iter_num', default = 10,             help="Maximum number
 parser.add_argument('--lambda_',  default = 0.03,           help="Facotr of the LCTC regularization")
 parser.add_argument('--LR_iter',  default = 4000,           help="Training epochs of CTC networks")
 parser.add_argument('--R_iter',   default = 4000,           help="Reduced Training epochs of CTC networks")
-parser.add_argument('--lambda_R', default = 0.07,           help="Factor of TV/SSTV regularization in CTC")
-parser.add_argument('--ip_BI',    default = 10,             help="The number of channel of input")
+parser.add_argument('--lambda_R', default = 0.7,            help="Factor of TV/SSTV regularization in CTC")
+parser.add_argument('--ip_BI',    default = 3,              help="The number of channel of input")
 parser.add_argument('--case',     default = 'RealScene2',   help="RealScene1")
 args = parser.parse_args()
 
