@@ -23,11 +23,11 @@ np.random.seed(1234)
 
 #-----------------------Opti. Configuration -----------------------#
 parser = argparse.ArgumentParser()
-parser.add_argument('--iter_num', default = 1,              help="Maximum number of iterations")
+parser.add_argument('--iter_num', default = 10,             help="Maximum number of iterations")
 parser.add_argument('--lambda_',  default = 0.03,           help="Facotr of the LCTC regularization")
-parser.add_argument('--LR_iter',  default = 10000,          help="Training epochs of CTC networks")
-parser.add_argument('--R_iter',   default = 10000,          help="Reduced Training epochs of CTC networks")
-parser.add_argument('--lambda_R', default = 0.1,            help="Factor of TV/SSTV regularization in CTC")
+parser.add_argument('--LR_iter',  default = 4000,           help="Training epochs of CTC networks")
+parser.add_argument('--R_iter',   default = 4000,           help="Reduced Training epochs of CTC networks")
+parser.add_argument('--lambda_R', default = 0.07,           help="Factor of TV/SSTV regularization in CTC")
 parser.add_argument('--ip_BI',    default = 10,             help="The number of channel of input")
 parser.add_argument('--case',     default = 'RealScene2',   help="RealScene1")
 args = parser.parse_args()
@@ -41,14 +41,15 @@ if not os.path.exists(results_dir):
     os.makedirs(results_dir)
 matfile = dataset_dir + '/' + data_name + '.mat'
 
-data_truth = torch.from_numpy(sio.loadmat(matfile)['img'])
-noisy_data = torch.from_numpy(sio.loadmat(matfile)['noisy_img'])
+data_truth = torch.from_numpy(sio.loadmat(matfile)['img'])[:, :, 2:-1]
+noisy_data = torch.from_numpy(sio.loadmat(matfile)['noisy_img'])[:, :, 2:-1]
 print('Mean of truth:', torch.mean(data_truth), 'Mean of noisy data:', torch.mean(noisy_data))
 
 data_truth = (data_truth) / (torch.max(data_truth))
-noisy_data = (noisy_data ) / (torch.max(noisy_data))
+noisy_data = (noisy_data ) / (1.4*torch.max(noisy_data))
 print('Min of truth:', torch.min(data_truth), 'Min of noisy data:', torch.min(noisy_data))
 print('Max of truth:', torch.max(data_truth), 'Max of noisy data:', torch.max(noisy_data))
+print('Mean of truth:', torch.mean(data_truth), 'Mean of noisy data:', torch.mean(noisy_data))
 
 
 #-------------------------- Optimization --------------------------#
