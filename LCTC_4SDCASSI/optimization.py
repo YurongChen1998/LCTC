@@ -31,7 +31,7 @@ def ADMM_Iter(meas, Phi, truth_tensor, args):
         x = x + shift_back(At((meas - A(shift(x, 2), Phi))/(Phi_sum + lambda_), Phi), 2)
 
         z = x+u
-        z = PnP_MoLi(meas, Phi, z.permute(2, 0, 1).unsqueeze(0), truth_tensor, im_input, args)
+        z = PnP_LCTC(meas, Phi, z.permute(2, 0, 1).unsqueeze(0), truth_tensor, im_input, args)
         u = u + (x.to(device) - z.to(device))
         
         # --------------- Evaluation ---------------#
@@ -42,7 +42,7 @@ def ADMM_Iter(meas, Phi, truth_tensor, args):
 
 
 
-def PnP_MoLi(meas, Phi, z, truth_tensor, im_input, args):
+def PnP_LCTC(meas, Phi, z, truth_tensor, im_input, args):
     torch.backends.cudnn.benchmark = True
     iter_num = args.LR_iter
     _, B, _, _ = truth_tensor.shape

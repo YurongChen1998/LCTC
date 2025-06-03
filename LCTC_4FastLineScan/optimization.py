@@ -47,7 +47,7 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB 
         temp_l = temp_l.permute(2, 0, 1).unsqueeze(0)
         im_net = CTC_model_load(ip_BI, temp_l.shape[1])
         train_iter, lambda_R = int(train_iter*1.01), lambda_R*0.96
-        out, loss_y_iter = PnP_MoLi(truth_tensor, temp_l, im_net, train_iter, R_iter, lambda_R, ip_BI)
+        out, loss_y_iter = PnP_LCTC(truth_tensor, temp_l, im_net, train_iter, R_iter, lambda_R, ip_BI)
         l = out.squeeze(0).permute(1, 2, 0).to(device)
         
         # -------- Updata Dual Variable u1
@@ -64,7 +64,7 @@ def ADMM_Iter(noisy_data, X_ori, args, index = None, save_path = None, show_RGB 
     return x_rec
     
   
-def PnP_MoLi(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, ip_BI):   
+def PnP_LCTC(truth_tensor, temp_l, im_net, iter_num, R_iter, lambda_R, ip_BI):   
     reg_noise_std = 1.0/30.0
     loss_array = np.zeros(iter_num)
     best_loss = float('inf')
