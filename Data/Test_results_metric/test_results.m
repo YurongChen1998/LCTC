@@ -1,7 +1,7 @@
 clc; 
 %% Test KAIST dataset
-data_name = 'scene01';
-load(['../../MoLi_4SDCASSI/Results/', data_name, '/', data_name, '.mat']);
+data_name = 'scene10';
+load(['../../LCTC_4SDCASSI/Results/', data_name, '/', data_name, '.mat']);
 x_rec = img;
 load(['../KAIST_Dataset/Orig_data/', data_name, '.mat']);
 data_truth = img;
