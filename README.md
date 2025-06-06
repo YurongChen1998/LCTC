@@ -90,8 +90,8 @@ cd LCTC
 
 Download and preprocess the necessary datasets:
 
-* **KAIST CASSI Dataset**: [Link](https://github.com/HubertWong0501/KAIST-CASSI)
-* **CAVE Toy Dataset**: [Link](https://www.sdms.afrl.af.mil/index.php?collection=hyperspectral)
+* **KAIST CASSI Dataset**: [Link]([https://github.com/HubertWong0501/KAIST-CASSI](https://github.com/YurongChen1998/LCTC/tree/main/Data))
+* **CAVE Toy Dataset**: [Link]([https://www.sdms.afrl.af.mil/index.php?collection=hyperspectral](https://github.com/YurongChen1998/LCTC/tree/main/Data))
 
 Ensure that the datasets are organized as per the instructions provided in the `Data/` directory or the respective subdirectories.
 
@@ -123,7 +123,7 @@ We report standard hyperspectral reconstruction metrics:
 * SSIM (Structural Similarity Index)
 * SAM (Spectral Angle Mapper)
 
-Evaluation results on public datasets can be reproduced using provided scripts.
+Evaluation metric can be reproduced using [provided scripts](https://github.com/YurongChen1998/LCTC/tree/main/Data/Test_results_metric).
 
 ---
 
@@ -131,9 +131,9 @@ Evaluation results on public datasets can be reproduced using provided scripts.
 
 For questions, please contact:
 
-**\[陈煜嵘 (Yurong Chen)]**
-
-*Hunan University*
-Email: chenyurong1998@outlook.com
+* 陈煜嵘 (Yurong Chen) 
+* Hunan University
+* Email: chenyurong1998@outlook.com
+* 🤝🤝🤝
 
 ---
