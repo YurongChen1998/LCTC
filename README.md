@@ -3,7 +3,7 @@
 This repository contains the official implementation of **LCTC (Lightweight Convolutional Thresholding Coding)**, a self-supervised hyperspectral image reconstruction framework that integrates **convolutional sparse coding** into an efficient deep prior for compressive hyperspectral imaging systems (e.g., CASSI, hyperspectral denoising, etc.).
 
 <p align="center">
-  <img src="./lctc_pipeline.jpg" alt="LCTC pipeline overview" width="600"/>
+  <img src="./lctc_pipeline.jpg" alt="LCTC pipeline overview" width="800"/>
 </p>
 
 ---
