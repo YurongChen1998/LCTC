@@ -126,35 +126,12 @@ Evaluation results on public datasets can be reproduced using provided scripts.
 
 ---
 
-## 📎 Citation
-
-If you use LCTC in your research, please cite:
-
-```bibtex
-@article{your_lctc_paper,
-  title={LCTC: Lightweight Convolutional Thresholding Sparse Coding Network Prior for Computational Hyperspectral Imaging},
-  author={Your Name and Collaborators},
-  journal={IEEE Transactions on Pattern Analysis and Machine Intelligence},
-  year={2025},
-}
-```
-
----
-
-## 🤝 Acknowledgments
-
-This work was supported by \[Your Funding Agency]. Some code components are adapted from DIP and DeSCI repositories.
-
----
-
 ## 📬 Contact
 
 For questions, please contact:
 
 **\[陈煜嵘 (Yurong Chen)]**
-*PhD Candidate*
-Email: \[[your.email@example.com](mailto:your.email@example.com)]
+*Hunan University*
+Email: chenyurong1998@outlook.com
 
 ---
-
-Let me know if you'd like the README customized for a particular codebase structure, dataset, or if you want to include image illustrations (e.g., training loss curves or result comparisons).
