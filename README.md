@@ -62,10 +62,26 @@ This design enables fast and memory-efficient inference suitable for real-time o
 
 ```bash
 LCTC/
-├── Data/                      # Scripts and utilities for data loading and preprocessing
-├── LCTC_4FastLineScan/        # LCTC implementation for fast line-scan hyperspectral imaging (hyperspectral denoising)
-├── LCTC_4SDCASSI/             # LCTC implementation for snapshot compressive spectral imaging (SD-CASSI)
-└── README.md                  # Project overview and documentation
+├── Data/                          # Utilities and loaders for hyperspectral datasets (KAIST, CAVE, etc.)
+│
+├── LCTC_4FastLineScan/           # LCTC implementation for fast line-scan hyperspectral denoising
+│   ├── model/                    # Model definition and architecture (CTC, encoder-decoder, etc.)
+│   ├── func.py                   # Utility functions for data processing
+│   ├── main_1_KAIST.py           # Main script for testing LCTC on KAIST dataset
+│   ├── main_2_CAVE.py            # Main script for testing LCTC on CAVE dataset
+│   ├── main_3_RealScene.py       # Main script for testing LCTC on real measured scenes
+│   ├── optimization.py           # Self-supervised optimization loop
+│   └── test_metric.py            # PSNR, SSIM, SAM evaluation utilities
+│
+├── LCTC_4SDCASSI/                # LCTC implementation for snapshot compressive spectral imaging (SD-CASSI)
+│   ├── model/                    # Model definition for SD-CASSI reconstruction
+│   ├── Results/                  # Output directory for reconstructed spectral images
+│   ├── func.py                   # Utilities for forward model and pre/post-processing
+│   ├── main_KAIST.py             # Main script for SD-CASSI image recovery using KAIST dataset
+│   ├── optimization.py           # Self-supervised optimization loop
+│   └── test_metric.py            # Evaluation functions for quantitative metrics
+│
+└── README.md                     # Project documentation and usage instructions
 ```
 
 ---
