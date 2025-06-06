@@ -59,58 +59,59 @@ This design enables fast and memory-efficient inference suitable for real-time o
 ---
 
 
+Certainly! Based on the updated structure of your [LCTC repository](https://github.com/YurongChen1998/LCTC/tree/main), here's the revised **Directory Structure** and **Getting Started** sections for your `README.md`:
+
+---
+
 ## 📁 Directory Structure
 
 ```bash
 LCTC/
-├── models/                # Network architecture definitions
-│   └── lctc_net.py
-├── data/                  # Scripts for loading hyperspectral datasets
-│   └── load_kaist.py
-├── utils/                 # Utility functions for metrics, visualization, etc.
-│   └── metrics.py
-├── configs/               # Configurations and parameters
-│   └── lctc_config.yaml
-├── train.py               # Training script (unsupervised)
-├── test.py                # Evaluation on benchmark datasets
-├── forward_model.py       # Forward operator (CASSI, SFC, etc.)
-└── README.md              # Project description
+├── Data/                      # Scripts and utilities for data loading and preprocessing
+├── LCTC_4FastLineScan/        # LCTC implementation for fast line-scan hyperspectral imaging (hyperspectral denoising)
+├── LCTC_4SDCASSI/             # LCTC implementation for snapshot compressive spectral imaging (SD-CASSI)
+└── README.md                  # Project overview and documentation
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Environment Setup
+### 1. Clone the Repository
+
+Begin by cloning the repository to your local machine:
 
 ```bash
-conda create -n lctc_env python=3.8
-conda activate lctc_env
-pip install -r requirements.txt
+git clone https://github.com/YurongChen1998/LCTC.git
+cd LCTC
 ```
 
-### 2. Prepare Dataset
+### 2. Prepare the Dataset
 
-Download and preprocess datasets:
+Download and preprocess the necessary datasets:
 
-* [KAIST CASSI Dataset](https://github.com/HubertWong0501/KAIST-CASSI)
-* [WDC HYDICE Dataset](https://www.sdms.afrl.af.mil/index.php?collection=hyperspectral)
+* **KAIST CASSI Dataset**: [Link](https://github.com/HubertWong0501/KAIST-CASSI)
+* **CAVE Toy Dataset**: [Link](https://www.sdms.afrl.af.mil/index.php?collection=hyperspectral)
 
-Modify `configs/lctc_config.yaml` to point to the dataset directory.
+Ensure that the datasets are organized as per the instructions provided in the `Data/` directory or the respective subdirectories.
 
-### 3. Train the Model
+### 3. Run LCTC
 
-```bash
-python train.py --config configs/lctc_config.yaml
-```
+Navigate to the appropriate subdirectory based on your application:
 
-This script trains LCTC in a self-supervised manner using only compressed measurements.
+* For **fast line-scan hyperspectral imaging (Hyperspectral denoising)**:
 
-### 4. Test the Model
+  ```bash
+  cd LCTC_4FastLineScan
+  python main.py
+  ```
 
-```bash
-python test.py --ckpt checkpoints/lctc_kaist.pth --dataset KAIST
-```
+* For **snapshot compressive spectral imaging (SD-CASSI)**:
+
+  ```bash
+  cd LCTC_4SDCASSI
+  python main.py
+  ```
 
 ---
 
@@ -131,6 +132,7 @@ Evaluation results on public datasets can be reproduced using provided scripts.
 For questions, please contact:
 
 **\[陈煜嵘 (Yurong Chen)]**
+
 *Hunan University*
 Email: chenyurong1998@outlook.com
 
