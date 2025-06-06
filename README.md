@@ -58,11 +58,6 @@ This design enables fast and memory-efficient inference suitable for real-time o
 
 ---
 
-
-Certainly! Based on the updated structure of your [LCTC repository](https://github.com/YurongChen1998/LCTC/tree/main), here's the revised **Directory Structure** and **Getting Started** sections for your `README.md`:
-
----
-
 ## 📁 Directory Structure
 
 ```bash
