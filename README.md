@@ -90,8 +90,8 @@ cd LCTC
 
 Download and preprocess the necessary datasets:
 
-* **KAIST CASSI Dataset**: [Link](https://github.com/YurongChen1998/LCTC/tree/main/Data)]
-* **CAVE Toy Dataset**: [Link](https://github.com/YurongChen1998/LCTC/tree/main/Data))
+* **KAIST CASSI Dataset**: [Link](https://github.com/YurongChen1998/LCTC/tree/main/Data)
+* **CAVE Toy Dataset**: [Link](https://github.com/YurongChen1998/LCTC/tree/main/Data)
 
 Ensure that the datasets are organized as per the instructions provided in the `Data/` directory or the respective subdirectories.
 
